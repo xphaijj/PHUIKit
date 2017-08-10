@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PHUIKit'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = '自定义Kit'
 
 # This description is used to generate tags and improve search results.
