@@ -23,6 +23,8 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		C70EC9781F4927310073D6B4 /* TestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C70EC9771F4927310073D6B4 /* TestCell.m */; };
+		C7AA0A7D1F4805D200929BD2 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AA0A7C1F4805D200929BD2 /* test.png */; };
 		E46665D183B8FCB9AA08CD10 /* libPods-PHUIKit_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 111D847C3ED4CCA36B4241C3 /* libPods-PHUIKit_Example.a */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,9 @@
 		A328AD037C3C42D18F561406 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A3B131998EBAAAE1D92D1630 /* Pods-PHUIKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PHUIKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PHUIKit_Tests/Pods-PHUIKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C631233226D5EB786D99D039 /* Pods-PHUIKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PHUIKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PHUIKit_Example/Pods-PHUIKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		C70EC9761F4927310073D6B4 /* TestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCell.h; sourceTree = "<group>"; };
+		C70EC9771F4927310073D6B4 /* TestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCell.m; sourceTree = "<group>"; };
+		C7AA0A7C1F4805D200929BD2 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +148,7 @@
 		6003F593195388D20070C39A /* Example for PHUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				C7AA0A7C1F4805D200929BD2 /* test.png */,
 				6003F59C195388D20070C39A /* PHAppDelegate.h */,
 				6003F59D195388D20070C39A /* PHAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -151,6 +157,8 @@
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				C70EC9761F4927310073D6B4 /* TestCell.h */,
+				C70EC9771F4927310073D6B4 /* TestCell.m */,
 			);
 			name = "Example for PHUIKit";
 			path = PHUIKit;
@@ -281,6 +289,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				C7AA0A7D1F4805D200929BD2 /* test.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -411,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* PHAppDelegate.m in Sources */,
+				C70EC9781F4927310073D6B4 /* TestCell.m in Sources */,
 				6003F5A7195388D20070C39A /* PHViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);

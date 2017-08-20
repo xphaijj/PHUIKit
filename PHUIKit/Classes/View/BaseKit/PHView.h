@@ -51,18 +51,32 @@
  */
 - (void)ph_dismiss;
 
+
 @end
 
 
-@interface PHView : UIView<PHViewProtocol>
-
-//当前页面绑定的ViewModel
+@interface PHView : UIView<PHViewProtocol> {
+}
+/**
+ 当前页面绑定的 ViewModel
+ */
 @property (nonatomic, strong) PHViewModel *viewModel;
 
-//当前页面事件的回调
+/**
+ 当前页面事件的回调
+ */
 @property (nonatomic, copy) PHViewBlock block;
 
 @end
+
+
+
+
+
+
+
+
+
 
 
 
