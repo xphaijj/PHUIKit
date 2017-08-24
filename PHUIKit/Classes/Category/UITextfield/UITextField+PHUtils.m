@@ -39,6 +39,19 @@
     };
 }
 /**
+ 左边视图
+ */
+- (UITextField *(^)(UIView *leftView))ph_leftView {
+    return ^id(UIView *leftView) {
+        if (CGRectEqualToRect(leftView.frame, CGRectZero)) {
+            leftView.frame = CGRectMake(0, 0, 44, 44);
+        }
+        self.leftView = leftView;
+        self.leftViewMode = UITextFieldViewModeAlways;
+        return self;
+    };
+}
+/**
  文本框内文本的颜色
  */
 - (UITextField *(^)(UIColor *textColor))ph_textColor {

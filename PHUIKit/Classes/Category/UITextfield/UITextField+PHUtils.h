@@ -37,7 +37,10 @@ typedef NS_OPTIONS(NSUInteger, PHStringFilterType) {
  文本框内文本的颜色
  */
 - (UITextField *(^)(UIColor *textColor))ph_textColor;
-
+/**
+ 左边视图
+ */
+- (UITextField *(^)(UIView *leftView))ph_leftView;
 /**
  键盘类型
  */
