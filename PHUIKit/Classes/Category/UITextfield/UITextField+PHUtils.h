@@ -29,7 +29,10 @@ typedef NS_OPTIONS(NSUInteger, PHStringFilterType) {
  文本框的占位文字
  */
 - (UITextField *(^)(NSString *placeholder))ph_placeholder;
-
+/**
+ 是否密文显示
+ */
+- (UITextField *(^)(BOOL secure))ph_secure;
 /**
  文本框内文本的颜色
  */

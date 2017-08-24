@@ -29,7 +29,15 @@
         return self;
     };
 }
-
+/**
+ 是否密文显示
+ */
+- (UITextField *(^)(BOOL secure))ph_secure {
+    return ^id(BOOL secure) {
+        self.secureTextEntry = secure;
+        return self;
+    };
+}
 /**
  文本框内文本的颜色
  */
