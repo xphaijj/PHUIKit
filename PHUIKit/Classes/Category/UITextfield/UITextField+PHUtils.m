@@ -7,6 +7,7 @@
 //
 
 #import "UITextField+PHUtils.h"
+#import <ReactiveObjC/ReactiveObjC.h>
 
 @implementation UITextField (PHUtils)
 
@@ -64,6 +65,11 @@
  */
 - (UITextField *(^)(PHValueBlock textDidChange))ph_textDidChange {
     return ^id(PHValueBlock textDidChange) {
+        [self.rac_textSignal subscribeNext:^(NSString * _Nullable x) {
+            if (textDidChange) {
+                textDidChange(x);
+            }
+        }];
         return self;
     };
 }

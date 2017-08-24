@@ -28,7 +28,9 @@
     
     UITextField.ph_create(self.view, ^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
-    }).ph_convertToTextField().ph_placeholder(@"place");
+    }).ph_convertToTextField().ph_placeholder(@"place").ph_textDidChange(^(NSString *value) {
+        PHLog(@"--- %@", value);
+    });
     
 //    PHTableSectionModel *model = PHTableSectionModel.ph_sectionData(@[@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3"]);
 //    
