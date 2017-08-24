@@ -63,22 +63,11 @@
 
 
 #pragma mark - type convert
-/**
- 类型转化
- */
 - (UIButton *(^)())ph_convertToButton;
-/**
- 类型转化
- */
 - (UILabel *(^)())ph_convertToLabel;
-/**
- 类型转化
- */
 - (UIImageView *(^)())ph_convertToImageView;
-/**
- 类型转化
- */
 - (UITableView *(^)())ph_convertToTableView;
+- (UITextField *(^)())ph_convertToTextField;
 
 
 #pragma mark - normal method

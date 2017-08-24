@@ -13,6 +13,7 @@
 #import <PHUIKit/UIImage+PHUtils.h>
 #import <PHUIKit/UIImageView+PHUtils.h>
 #import <PHUIKit/UITableView+PHUtils.h>
+#import <PHUIKit/UITextField+PHUtils.h>
 #import "TestCell.h"
 
 @interface PHViewController ()
@@ -25,26 +26,30 @@
 {
     [super viewDidLoad];
     
-    PHTableSectionModel *model = PHTableSectionModel.ph_sectionData(@[@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3"]);
-    
-    UITableView
-    .ph_create(self.view, ^(MASConstraintMaker *make) {
+    UITextField.ph_create(self.view, ^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
-    }, UITableViewStylePlain)
-    .ph_tableHeader(
-                    UIView
-                    .ph_frame(nil,CGRectMake(0, 0, PH_SCREEN_WIDTH, 200))
-                    .ph_backgroundColor(HEXCOLOR(0xff5555)))
-    .ph_tableFooter(
-                    UIView
-                    .ph_frame(nil,CGRectMake(0, 0, PH_SCREEN_WIDTH, 100))
-                    .ph_backgroundColor(HEXCOLOR(0xf5f555)))
-    .ph_cell(44, [TestCell class])
-    .ph_tableData(@[model])
-    .ph_cellClick(^(UITableViewCell *cell, NSIndexPath *indexPath, id cellData){
-        PHLog(@"click %@", cellData);
-    })
-    .ph_reloadData();;
+    }).ph_convertToTextField().ph_placeholder(@"place");
+    
+//    PHTableSectionModel *model = PHTableSectionModel.ph_sectionData(@[@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3"]);
+//    
+//    UITableView
+//    .ph_create(self.view, ^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+//    }, UITableViewStylePlain)
+//    .ph_tableHeader(
+//                    UIView
+//                    .ph_frame(nil,CGRectMake(0, 0, PH_SCREEN_WIDTH, 200))
+//                    .ph_backgroundColor(HEXCOLOR(0xff5555)))
+//    .ph_tableFooter(
+//                    UIView
+//                    .ph_frame(nil,CGRectMake(0, 0, PH_SCREEN_WIDTH, 100))
+//                    .ph_backgroundColor(HEXCOLOR(0xf5f555)))
+//    .ph_cell(44, [TestCell class])
+//    .ph_tableData(@[model])
+//    .ph_cellClick(^(UITableViewCell *cell, NSIndexPath *indexPath, id cellData){
+//        PHLog(@"click %@", cellData);
+//    })
+//    .ph_reloadData();;
 //    .ph_radius(50)
 //    .ph_backgroundColor(HEXCOLOR(0xffff55));
     

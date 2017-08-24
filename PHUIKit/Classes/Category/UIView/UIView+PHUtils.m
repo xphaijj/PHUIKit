@@ -244,6 +244,17 @@
     };
 }
 
+- (UITextField *(^)())ph_convertToTextField {
+    return ^id() {
+        if ([self isKindOfClass:[UITextField class]]) {
+            return self;
+        } else {
+            PHLogError(@"tableView 类型转化错误");
+        }
+        return nil;
+    };
+}
+
 
 #pragma mark - method
 /**
