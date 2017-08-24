@@ -17,8 +17,8 @@
 /**
  设置image
  */
-- (UIImageView *(^)(UIImage *image))ph_image {
-    return ^id(UIImage *image) {
+- (UIImageView *(^)(id))ph_image {
+    return ^id(id image) {
         if ([self isKindOfClass:[UIImageView class]]) {
             if ([image isKindOfClass:[UIImage class]]) {
                 [self setImage:image];

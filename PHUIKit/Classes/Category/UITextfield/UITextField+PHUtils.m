@@ -74,4 +74,13 @@
     };
 }
 
+/**
+ 过滤类型
+ */
+- (UITextField *(^)(PHStringFilterType filterType))ph_filterType {
+    return ^id(PHStringFilterType filterType) {
+        return self;
+    };
+}
+
 @end

@@ -14,7 +14,7 @@
 /**
  设置image
  */
-- (UIImageView *(^)(UIImage *image))ph_image;
+- (UIImageView *(^)(id image))ph_image;
 /**
  设置显示方式
  */

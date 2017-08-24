@@ -9,6 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <PHBaseLib/PHMacro.h>
 
+typedef NS_OPTIONS(NSUInteger, PHStringFilterType) {
+    PH_STRING_FILTER_TYPE_NUMBER = 100,//纯数字
+    PH_STRING_FILTER_TYPE_LETTER,//纯字母
+    PH_STRING_FILTER_TYPE_HANZI,//汉字
+    PH_STRING_FILTER_TYPE_EMOJI,//emoji
+    PH_STRING_FILTER_TYPE_SYMBOL,//符号
+    PH_STRING_FILTER_TYPE_NONE,//没有限制
+};
+
+
 @interface UITextField (PHUtils)
 
 /**
@@ -39,6 +49,10 @@
  文本框内容发生改变时的调用
  */
 - (UITextField *(^)(PHValueBlock textDidChange))ph_textDidChange;
+/**
+ 过滤类型
+ */
+- (UITextField *(^)(PHStringFilterType filterType))ph_filterType;
 
 
 

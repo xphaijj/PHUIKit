@@ -37,8 +37,8 @@
 /**
  普通image
  */
-- (UIButton *(^)(UIImage *img))ph_normarlImage {
-    return ^id(UIImage *image) {
+- (UIButton *(^)(id img))ph_normarlImage {
+    return ^id(id image) {
         return self.ph_stateImage(image, UIControlStateNormal);
     };
 }
@@ -70,8 +70,8 @@
 /**
  选中image
  */
-- (UIButton *(^)(UIImage *img))ph_selectedImage {
-    return ^id(UIImage *img) {
+- (UIButton *(^)(id img))ph_selectedImage {
+    return ^id(id img) {
         return self.ph_stateImage(img, UIControlStateSelected);
     };
 }

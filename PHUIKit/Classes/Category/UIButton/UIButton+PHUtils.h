@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, PHButtonLayout) {
 /**
  普通image
  */
-- (UIButton *(^)(UIImage *img))ph_normarlImage;
+- (UIButton *(^)(id img))ph_normarlImage;
 /**
  普通title
  */
@@ -38,7 +38,7 @@ typedef NS_ENUM(NSUInteger, PHButtonLayout) {
 /**
  选中image
  */
-- (UIButton *(^)(UIImage *img))ph_selectedImage;
+- (UIButton *(^)(id img))ph_selectedImage;
 /**
  选中title
  */
