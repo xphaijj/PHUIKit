@@ -57,14 +57,14 @@ BOOL Coordinate2DisEqual(CLLocationCoordinate2D first, CLLocationCoordinate2D se
 
 
 @interface PHMapVC ()<BMKMapViewDelegate, BMKLocationServiceDelegate> {
-    BMKMapView *_mapView;
-    BMKLocationService *locationService;
-    dispatch_queue_t dispatchQueue;
-    dispatch_group_t dispatchGroup;
-    NSArray *startPlacemarks;
-    NSArray *endPlacemarks;
 }
 
+@property (nonatomic, strong) BMKMapView *mapView;
+@property (nonatomic, strong) BMKLocationService *locationService;
+@property (nonatomic, strong) dispatch_queue_t dispatchQueue;
+@property (nonatomic, strong) dispatch_group_t dispatchGroup;
+@property (nonatomic, strong) NSArray *startPlacemarks;
+@property (nonatomic, strong) NSArray *endPlacemarks;
 @property (nonatomic, strong) BMKPointAnnotation *startAnnotation;
 @property (nonatomic, strong) BMKPointAnnotation *endAnnotation;
 
@@ -105,71 +105,75 @@ BOOL Coordinate2DisEqual(CLLocationCoordinate2D first, CLLocationCoordinate2D se
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    locationService = [[BMKLocationService alloc] init];
+    self.locationService = [[BMKLocationService alloc] init];
     
-    _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, PH_SCREEN_WIDTH, PH_SCREEN_WIDTH)];
-    [self.view addSubview:_mapView];
-    [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, PH_SCREEN_WIDTH, PH_SCREEN_WIDTH)];
+    [self.view addSubview:self.mapView];
+    [self.mapView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    [_mapView removeAnnotations:_mapView.annotations];
+    [self.mapView removeAnnotations:_mapView.annotations];
     
-    _mapView.showsUserLocation = NO;//先关闭显示的定位图层
-    _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
-    _mapView.showsUserLocation = YES;//显示定位图层
+    self.mapView.showsUserLocation = NO;//先关闭显示的定位图层
+    self.mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
+    self.mapView.showsUserLocation = YES;//显示定位图层
     //设置地图缩放级别
-    [_mapView setZoomLevel:11];
+    [self.mapView setZoomLevel:11];
 
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"导航" style:UIBarButtonItemStyleDone target:self action:@selector(navigationTO:)];
     self.navigationItem.rightBarButtonItem = item;
     
     PH_Weak(self);
-    dispatchQueue = dispatch_get_global_queue(0, 0);//dispatch_queue_create("PHMapVC_Queue", DISPATCH_QUEUE_CONCURRENT);
-    dispatchGroup = dispatch_group_create();
+    self.dispatchQueue = dispatch_get_global_queue(0, 0);//dispatch_queue_create("PHMapVC_Queue", DISPATCH_QUEUE_CONCURRENT);
+    self.dispatchGroup = dispatch_group_create();
     
-    dispatch_group_enter(dispatchGroup);
-    dispatch_group_async(dispatchGroup, dispatchQueue, ^{
+    dispatch_group_enter(self.dispatchGroup);
+    dispatch_group_async(self.dispatchGroup, self.dispatchQueue, ^{
+        PH_Strong(self);
         if (Coordinate2DIsValid(self.startCoordinate2D) && PH_CheckString(self.startAddress)) {
-            dispatch_group_leave(dispatchGroup);
+            dispatch_group_leave(self.dispatchGroup);
         } else if (Coordinate2DIsValid(self.startCoordinate2D)) {
             [PHLocationHelper addressFromCoorinate2D:self.startCoordinate2D completionHandler:^(NSString *address, CLLocationCoordinate2D coordinate2D, NSArray<CLPlacemark *> *placemarks) {
                 PH_Strong(self);
                 self.startAddress = address;
-                dispatch_group_leave(dispatchGroup);
+                dispatch_group_leave(self.dispatchGroup);
             }];
         } else if (PH_CheckString(self.startAddress)){
             [PHLocationHelper coordinate2DfromAddress:self.startAddress completionHandler:^(NSString *address, CLLocationCoordinate2D coordinate2D, NSArray<CLPlacemark *> *placemarks) {
-                startPlacemarks = placemarks;
+                PH_Strong(self);
+                self.startPlacemarks = placemarks;
                 self.startCoordinate2D = coordinate2D;
-                dispatch_group_leave(dispatchGroup);
+                dispatch_group_leave(self.dispatchGroup);
             }];
         } else {//起始位置无效
             self.startAddress = @"当前位置";
             self.startCoordinate2D = [PHLocationHelper shareInstance].currentLocation.coordinate;
-            dispatch_group_leave(dispatchGroup);
+            dispatch_group_leave(self.dispatchGroup);
         }
     });
     
-    dispatch_group_enter(dispatchGroup);
-    dispatch_group_async(dispatchGroup, dispatchQueue, ^{
+    dispatch_group_enter(self.dispatchGroup);
+    dispatch_group_async(self.dispatchGroup, self.dispatchQueue, ^{
+        PH_Strong(self);
         if (Coordinate2DIsValid(self.endCoordinate2D) && PH_CheckString(self.endAddress)) {
-            dispatch_group_leave(dispatchGroup);
+            dispatch_group_leave(self.dispatchGroup);
         } else if (Coordinate2DIsValid(self.endCoordinate2D)) {
             [PHLocationHelper addressFromCoorinate2D:self.endCoordinate2D completionHandler:^(NSString *address, CLLocationCoordinate2D coordinate2D, NSArray<CLPlacemark *> *placemarks) {
+                PH_Strong(self);
                 self.endAddress = address;
-                dispatch_group_leave(dispatchGroup);
+                dispatch_group_leave(self.dispatchGroup);
             }];
         } else if (PH_CheckString(self.endAddress)) {
             [PHLocationHelper coordinate2DfromAddress:self.endAddress completionHandler:^(NSString *address, CLLocationCoordinate2D coordinate2D, NSArray<CLPlacemark *> *placemarks) {
                 PH_Strong(self);
-                endPlacemarks = placemarks;
+                self.endPlacemarks = placemarks;
                 self.endCoordinate2D = coordinate2D;
-                dispatch_group_leave(dispatchGroup);
+                dispatch_group_leave(self.dispatchGroup);
             }];
         } else {
             self.endAddress = @"当前位置";
             self.endCoordinate2D = [PHLocationHelper shareInstance].currentLocation.coordinate;
-            dispatch_group_leave(dispatchGroup);
+            dispatch_group_leave(self.dispatchGroup);
         }
     });
 }
@@ -178,8 +182,8 @@ BOOL Coordinate2DisEqual(CLLocationCoordinate2D first, CLLocationCoordinate2D se
 - (void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     _mapView.delegate = self;
-    locationService.delegate = self;
-    [locationService startUserLocationService];
+    self.locationService.delegate = self;
+    [self.locationService startUserLocationService];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -188,25 +192,25 @@ BOOL Coordinate2DisEqual(CLLocationCoordinate2D first, CLLocationCoordinate2D se
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [_mapView viewWillDisappear];
-    locationService.delegate = nil;
-    locationService = nil;
-    _mapView.delegate = nil;
-    _mapView = nil;
+    [self.mapView viewWillDisappear];
+    self.locationService.delegate = nil;
+    self.locationService = nil;
+    self.mapView.delegate = nil;
+    self.mapView = nil;
 }
 
 - (void)ph_reloadData {
-    [_mapView setCenterCoordinate:CLLocationCoordinate2DIsValid(self.centerCoordinate2D)?self.centerCoordinate2D:[PHLocationHelper shareInstance].currentLocation.coordinate];
+    [self.mapView setCenterCoordinate:CLLocationCoordinate2DIsValid(self.centerCoordinate2D)?self.centerCoordinate2D:[PHLocationHelper shareInstance].currentLocation.coordinate];
     if (self.startAnnotation && [_mapView.annotations containsObject:self.startAnnotation]) {
-        [_mapView removeAnnotation:self.startAnnotation];
+        [self.mapView removeAnnotation:self.startAnnotation];
     }
     self.startAnnotation.coordinate = _startCoordinate2D;
-    [_mapView addAnnotation:self.startAnnotation];
+    [self.mapView addAnnotation:self.startAnnotation];
     if (self.endAnnotation && [_mapView.annotations containsObject:self.endAnnotation]) {
         [_mapView removeAnnotation:self.endAnnotation];
     }
     self.endAnnotation.coordinate = _endCoordinate2D;
-    [_mapView addAnnotation:self.endAnnotation];
+    [self.mapView addAnnotation:self.endAnnotation];
 }
 
 - (void)ph_selectPlacemarks:(NSArray<CLPlacemark *> *)placemarks message:(NSString *)msg valueBlock:(PHValueBlock)valueBlock {
@@ -231,7 +235,7 @@ BOOL Coordinate2DisEqual(CLLocationCoordinate2D first, CLLocationCoordinate2D se
  *@param userLocation 新的用户位置
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
-    [_mapView updateLocationData:userLocation];
+    [self.mapView updateLocationData:userLocation];
 }
 
 // 根据anntation生成对应的View
@@ -251,25 +255,29 @@ BOOL Coordinate2DisEqual(CLLocationCoordinate2D first, CLLocationCoordinate2D se
 
 #pragma mark -- view action
 - (void)navigationTO:(UIBarButtonItem *)sender {
-    if (endPlacemarks.count > 1) {
-        dispatch_group_enter(dispatchGroup);
-        [self ph_selectPlacemarks:endPlacemarks message:@"选择目的地" valueBlock:^(id value) {
+    PH_Weak(self);
+    if (self.endPlacemarks.count > 1) {
+        dispatch_group_enter(self.dispatchGroup);
+        [self ph_selectPlacemarks:self.endPlacemarks message:@"选择目的地" valueBlock:^(id value) {
+            PH_Strong(self);
             CLPlacemark *placemark = value;
             self.endCoordinate2D = placemark.location.coordinate;
-            dispatch_group_leave(dispatchGroup);
+            dispatch_group_leave(self.dispatchGroup);
         }];
     }
 
-    if (startPlacemarks.count > 1) {
-        dispatch_group_enter(dispatchGroup);
-        [self ph_selectPlacemarks:startPlacemarks message:@"选择出发地" valueBlock:^(id value) {
+    if (self.startPlacemarks.count > 1) {
+        dispatch_group_enter(self.dispatchGroup);
+        [self ph_selectPlacemarks:self.startPlacemarks message:@"选择出发地" valueBlock:^(id value) {
+            PH_Strong(self);
             CLPlacemark *placemark = value;
             self.startCoordinate2D = placemark.location.coordinate;
-            dispatch_group_leave(dispatchGroup);
+            dispatch_group_leave(self.dispatchGroup);
         }];
     }
     
-    dispatch_group_notify(dispatchGroup, dispatchQueue, ^{
+    dispatch_group_notify(self.dispatchGroup, self.dispatchQueue, ^{
+        PH_Strong(self);
         switch (self.type) {
             case PHRouteTypeFromCurrentToStart:
             {

@@ -9,6 +9,14 @@
 #import "UITextField+PHUtils.h"
 #import <ReactiveObjC/ReactiveObjC.h>
 
+@interface UITextField (PHData)
+
+@end
+
+@implementation UITextField (PHData)
+
+@end
+
 @implementation UITextField (PHUtils)
 
 /**
@@ -104,4 +112,36 @@
     };
 }
 
+/**
+ 限制长度
+ */
+- (UITextField *(^)(NSUInteger limitLength))ph_limitLength {
+    return ^id(NSUInteger limitLength) {
+        [self.rac_textSignal subscribeNext:^(NSString * _Nullable x) {
+            
+        }];
+        return self;
+    };
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

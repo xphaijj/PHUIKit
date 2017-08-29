@@ -59,7 +59,10 @@ typedef NS_OPTIONS(NSUInteger, PHStringFilterType) {
  过滤类型
  */
 - (UITextField *(^)(PHStringFilterType filterType))ph_filterType;
-
+/**
+ 限制长度
+ */
+- (UITextField *(^)(NSUInteger limitLength))ph_limitLength;
 
 
 @end

@@ -30,7 +30,7 @@
         make.edges.equalTo(self.view);
     }).ph_convertToTextField().ph_placeholder(@"place").ph_textDidChange(^(NSString *value) {
         PHLog(@"--- %@", value);
-    }).ph_insets(UIEdgeInsetsMake(0, 30, 0, 30));
+    });
     
 //    PHTableSectionModel *model = PHTableSectionModel.ph_sectionData(@[@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3",@"1", @"2", @"3"]);
 //    
